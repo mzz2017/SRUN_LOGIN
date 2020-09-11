@@ -1,5 +1,7 @@
 # SRUN_LOGIN
 
+深澜网络准入认证系统一键登录
+
 使用方法：
 
 环境变量
@@ -10,15 +12,15 @@
 
 `SRUN_HOST`: 域名，默认10.248.98.2
 
-比方说路由器是梅林，就挂在WAN-START脚本下面就好。
+`SRUN_KEEP_ALIVE`: 设为1或true则每隔180秒发送一次请求以保持在线，可以与nohup一起使用
 
-交叉编译推荐用gox：
+### Docker
 
-```bash
-# set goproxy.io as proxy
-export GOPROXY=https://goproxy.io
-# install gox
-go get -u github.com/mitchellh/gox
-# cross compile
-gox
+```shell script
+docker run -d --restart=always \
+           -e SRUN_UNAME=yourusername \
+           -e SRUN_PASSWD=yourpassword \
+           -e SRUN_KEEP_ALIVE=1 \
+           --name srun_login \
+           mzz2017/srun_login
 ```
